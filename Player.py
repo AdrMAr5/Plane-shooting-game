@@ -16,9 +16,10 @@ class Player(Entity):
         self.speed = 400
 
         self.timeToShoot = 0.1
+        self.canShoot = True
+
         self._shoot_event = Clock.schedule_interval(self.shootDelay, self.timeToShoot)
         self._collisionEvent = Clock.schedule_interval(self.collision, game.collisionCheckTime)
-        self.canShoot = True
 
         game.bind(on_frame=self.on_frame)
 
@@ -90,6 +91,7 @@ class Player(Entity):
                 return
 
     def stop_call_backs(self):
+        self.clear_widgets()
         self.game.unbind(on_frame=self.on_frame)
         self._shoot_event.cancel()
         self._collisionEvent.cancel()
@@ -97,4 +99,6 @@ class Player(Entity):
     def destroy(self):
         self.stop_call_backs()
         self.game.entityManager.remove_entity(self)
+        self.game.dispatch("on_game_over")
+
 

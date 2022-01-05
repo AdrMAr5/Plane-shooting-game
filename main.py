@@ -1,92 +1,53 @@
 from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.graphics import Rectangle
-from kivy.core.window import Window
 from kivy.clock import Clock
-from kivy.core.audio import SoundLoader
-from kivy.uix.label import CoreLabel
-import random
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen
 
-from Enemy import Enemy
-from EnitityManager import EntityManager
-from Entity import Entity
-from Player import Player
-from Zero import Zero
+from GameWidget import GameWidget
 
 
-def scoreFormat(score):
-    str_score = str(score)
-    length = len(str_score)
-    return (6 - length) * '0' + str_score
+class MainWindow(Screen):
+
+    def play_game(self):
+        sm.current = "Game"
 
 
-class GameWidget(Widget):
+class GameWindow(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.game = GameWidget()
+        self.game.bind(on_game_over=self.on_game_over)
+        self.add_widget(self.game)
 
-        self.collisionCheckTime = 0.1
+    def on_pre_enter(self, *args):
+        self.game = GameWidget()
+        self.add_widget(self.game)
 
-        self._score_label = CoreLabel(text="000000", font_size=26)
-        self._score_label.refresh()
-        self._score = 0
+    def on_enter(self, *args):
+        print("Wchodzę do giery")
+        # self.game = GameWidget()
+        # self.add_widget(self.game)
 
-        self.register_event_type("on_frame")
+    def on_leave(self, *args):
+        print("Wychodzę z giery")
+        self.remove_widget(self.game)
 
-        with self.canvas:
-            Rectangle(source="assets/background.png", pos=(0, 0),
-                      size=(Window.width, Window.height))
-            self._score_instruction = Rectangle(texture=self._score_label.texture, pos=(
-                0, Window.height - 50), size=self._score_label.texture.size)
-
-        self.player = Player(self)
-        self.player.entity_pos = (Window.width - Window.width / 3, 0)
-        self.entityManager = EntityManager(self)
-        self.entityManager.add_entity(self.player)
-
-
-        Clock.schedule_interval(lambda dt: print(f"[\033[92mINFO\033[0m   ] [FPS         ] {str(Clock.get_fps())}"), 1)
-
-        Clock.schedule_interval(self._on_frame, 0)
-
-        # self.sound = SoundLoader.load("assets/music.wav")
-        # self.sound.play()
-
-        Clock.schedule_interval(self.spawn_enemies, 1)
-        #self.spawn_enemies(1)
-
-    def spawn_enemies(self, dt):
-        for i in range(1):
-            random_x = random.randint(0, Window.width)
-            y = Window.height
-            self.entityManager.add_entity(Zero(self, (random_x, y)))
-
-    def _on_frame(self, dt):
-        self.dispatch("on_frame", dt)
-
-    def on_frame(self, dt):
-        pass
-
-    @property
-    def score(self):
-        return self._score
-
-    @score.setter
-    def score(self, value):
-        self._score = value
-        self._score_label.text = scoreFormat(value)
-        self._score_label.refresh()
-        self._score_instruction.texture = self._score_label.texture
-        self._score_instruction.size = self._score_label.texture.size
+    def on_game_over(self, dt):
+        print("Koniec Gry")
+        sm.current = "Menu"
 
 
-game = GameWidget()
+kv = Builder.load_file("menu.kv")
+sm = ScreenManager()
 
 
-class MyApp(App):
+class MyMainApp(App):
+
     def build(self):
-        return game
+        sm.add_widget(GameWindow(name="Game"))
+        sm.add_widget(MainWindow(name="Menu"))
+        return sm
 
 
 if __name__ == "__main__":
-    app = MyApp()
-    app.run()
+    MyMainApp().run()
