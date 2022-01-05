@@ -76,3 +76,6 @@ class Entity(Widget):
         if self.y < 0 or self.y > Window.height:
             return True
         return False
+
+    def distance_between(self, position):
+        return pow((self.entity_pos[0] - position[0])**2 + (self.entity_pos[1] - position[1])**2, 0.5)

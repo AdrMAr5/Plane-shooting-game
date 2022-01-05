@@ -4,7 +4,7 @@ from kivy.core.window import Window
 from Bullet import Bullet
 from Entity import Entity
 from Explosion import Explosion
-
+from ship import Ship
 
 class Player(Entity):
     def __init__(self, game, **kwargs):
@@ -69,7 +69,7 @@ class Player(Entity):
             self.timeToShoot += 0.5
             x = self.entity_pos[0] + 12
             y = self.entity_pos[1] + 50
-            self.game.entityManager.add_entity(Bullet(self.game, (x, y)))
+            self.game.entityManager.add_entity(Bullet(self.game,  self, (x, y)))
 
     def shootDelay(self, dt):
         self.canShoot = True
@@ -84,7 +84,7 @@ class Player(Entity):
 
     def collision(self, dt):
         for e in self.game.entityManager.enemies:
-            if e.collide_widget(self):
+            if e.collide_widget(self) and type(e) != Ship:
                 self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
                 self.destroy()
                 e.destroy()
