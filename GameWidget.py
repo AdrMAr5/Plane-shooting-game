@@ -8,6 +8,7 @@ import random
 from EnitityManager import EntityManager
 from Player import Player
 from Zero import Zero
+from ship import Ship
 
 
 def scoreFormat(score):
@@ -48,6 +49,7 @@ class GameWidget(Widget):
         # self.sound.play()
 
         Clock.schedule_interval(self.spawn_enemies, 1)
+        Clock.schedule_interval(self.spawn_ships, 3)
         # self.spawn_enemies(1)
 
     def spawn_enemies(self, dt):
@@ -55,6 +57,11 @@ class GameWidget(Widget):
             random_x = random.randint(0, Window.width)
             y = Window.height
             self.entityManager.add_entity(Zero(self, (random_x, y)))
+
+    def spawn_ships(self, dt):
+        for i in range(1):
+            pos = (random.randint(0, Window.width), Window.height)
+            self.entityManager.add_entity(Ship(self, pos))
 
     def _on_frame(self, dt):
         self.dispatch("on_frame", dt)

@@ -31,7 +31,7 @@ class Ship(Enemy):
         self.entity_pos = self.entity_pos[0], self.entity_pos[1] - self.parameters['speed']
         if self.distance_between(self.player_pos) < 150 and self.shoots < self.parameters['bullets']:
             self.shoots += 1
-            self.game.entityManager.add_entity(EnemyBullet(self.game, self.entity_pos))
+            self.game.entityManager.add_entity(EnemyBullet(self.game, self.entity_pos, 200, (18, 18)))
 
 
     def stop_callbacks(self):

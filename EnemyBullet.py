@@ -3,9 +3,9 @@ from Enemy import Enemy
 
 
 class EnemyBullet(Enemy):
-    def __init__(self, game, pos, speed=300, **kwargs):
+    def __init__(self, game, pos, speed=300, size=(16, 16), **kwargs):
         super(EnemyBullet, self).__init__(game, pos, speed, **kwargs)
-        self.entity_size = (16, 16)
+        self.entity_size = size
         self.entity_pos = pos
         self.source = "assets/enemy bullet.png"
         self.playerPos = self.game.player.entity_pos

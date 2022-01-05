@@ -35,7 +35,7 @@ class Zero(Enemy):
             if self.entity_pos == self.playerPos:
                 self.commandStep += 1
         elif self.commandStep == 1:  # Stzał do gracza
-            #self.game.entityManager.add_entity(EnemyBullet(self.game, self.entity_pos))
+            self.game.entityManager.add_entity(EnemyBullet(self.game, self.entity_pos))
             self.commandStep += 1
             self.angularSpeedIncrement = self.get_angular_increment(self.escapePos)
         elif self.commandStep == 2:  # Odlatywanie od gracza
