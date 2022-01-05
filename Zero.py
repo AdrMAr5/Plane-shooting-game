@@ -28,6 +28,7 @@ class Zero(Enemy):
 
     def on_frame(self, sender, dt):
         self.moving(dt)
+        print(self.pos)
 
     def moving(self, dt):
         if self.commandStep == 0:  # Podlatywanie pod pozycję gracza
@@ -35,7 +36,7 @@ class Zero(Enemy):
             if self.entity_pos == self.playerPos:
                 self.commandStep += 1
         elif self.commandStep == 1:  # Stzał do gracza
-            self.game.entityManager.add_entity(EnemyBullet(self.game, self.entity_pos))
+            #self.game.entityManager.add_entity(EnemyBullet(self.game, self.entity_pos))
             self.commandStep += 1
             self.angularSpeedIncrement = self.get_angular_increment(self.escapePos)
         elif self.commandStep == 2:  # Odlatywanie od gracza
