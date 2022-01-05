@@ -24,6 +24,7 @@ class Ship(Enemy):
 
     def on_frame(self, sender, dt):
         self.moving(dt)
+        self.player_pos = self.get_player_pos()
         #print(self.pos)
 
     def moving(self, dt):
