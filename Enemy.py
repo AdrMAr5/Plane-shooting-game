@@ -1,6 +1,6 @@
 from kivy.clock import Clock
 
-from Bullet import Bullet
+
 from Entity import Entity
 from Explosion import Explosion
 

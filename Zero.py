@@ -28,7 +28,6 @@ class Zero(Enemy):
 
     def on_frame(self, sender, dt):
         self.moving(dt)
-        print(self.pos)
 
     def moving(self, dt):
         if self.commandStep == 0:  # Podlatywanie pod pozycję gracza

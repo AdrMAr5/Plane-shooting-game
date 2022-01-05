@@ -68,7 +68,7 @@ class Player(Entity):
             self.timeToShoot += 0.5
             x = self.entity_pos[0] + 12
             y = self.entity_pos[1] + 50
-            self.game.entityManager.add_entity(Bullet(self.game, (x, y)))
+            self.game.entityManager.add_entity(Bullet(self.game,  self, (x, y)))
 
     def shootDelay(self, dt):
         self.canShoot = True

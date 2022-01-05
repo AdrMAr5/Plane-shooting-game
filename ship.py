@@ -25,12 +25,11 @@ class Ship(Enemy):
     def on_frame(self, sender, dt):
         self.moving(dt)
         self.player_pos = self.get_player_pos()
-        #print(self.pos)
+
 
     def moving(self, dt):
         self.entity_pos = self.entity_pos[0], self.entity_pos[1] - self.parameters['speed']
-        if (self.entity_pos[0] - self.player_pos[0])**2 + (self.entity_pos[1] - self.player_pos[1])**2 < 100000\
-                and self.shoots < self.parameters['bullets']:
+        if self.distance_between(self.player_pos) < 150 and self.shoots < self.parameters['bullets']:
             self.shoots += 1
             self.game.entityManager.add_entity(EnemyBullet(self.game, self.entity_pos))
 
