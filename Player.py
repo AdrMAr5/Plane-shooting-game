@@ -83,11 +83,19 @@ class Player(Entity):
             self.entity_pos = (newX, newY)
 
     def collision(self, dt):
-        for e in self.game.entityManager.enemies:
-            if e.collide_widget(self):
+        for enemy in self.game.entityManager.enemies:
+            if enemy.collide_widget(self):
                 self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
                 self.destroy()
-                e.destroy()
+                enemy.destroy()
+                return
+
+        for bullet in self.game.entityManager.enemy_bullets:
+            if bullet.collide_widget(self):
+                self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
+                self.destroy()
+                bullet.destroy()
+                print(True)
                 return
 
     def stop_call_backs(self):

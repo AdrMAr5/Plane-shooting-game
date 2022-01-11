@@ -3,6 +3,7 @@ from kivy.graphics import Rectangle
 from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.uix.label import CoreLabel, Label
+from kivy.uix.stencilview import StencilView
 import random
 
 from EnitityManager import EntityManager
@@ -17,10 +18,9 @@ def scoreFormat(score):
     return (6 - length) * '0' + str_score
 
 
-class GameWidget(Widget):
-    def __init__(self, sm, **kwargs):
+class GameWidget(StencilView):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.sm = sm
         self.game_over = False
 
         self.collisionCheckTime = 0.1
@@ -72,11 +72,8 @@ class GameWidget(Widget):
         pass
 
     def on_game_over(self):
-        self.game_over = True
-        self.sm.current = 'menu'
-
-    def on_dupa_event(self):
-        print('dupa event')
+        print('Player: umieram elo')
+        self.parent.change()
 
     @property
     def score(self):
@@ -89,5 +86,17 @@ class GameWidget(Widget):
         self._score_label.refresh()
         self._score_instruction.texture = self._score_label.texture
         self._score_instruction.size = self._score_label.texture.size
+
+    def destroy(self):
+        #self.unregister_event_types('on_frame')
+        print('game widget: usuwam się elo')
+
+        #self.entityManager = None
+        #self.player = None
+
+        #self.unregister_event_types('on_game_over')
+        self.clear_widgets()
+        self.parent.remove_widget(self)
+
 
 

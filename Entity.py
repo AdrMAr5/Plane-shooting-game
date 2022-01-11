@@ -58,13 +58,13 @@ class Entity(Widget):
         m = abs(diff_x) + abs(diff_y)
         return diff_x / m, diff_y / m
 
-    def get_angular_increment(self, targetPos, direction=(0, 0)):
+    def get_angular_increment(self, target_pos, direction=(0, 0)):
         if direction == (0, 0):
-            direction = self.get_direction(targetPos)
+            direction = self.get_direction(target_pos)
         if direction[0] == 0:
             return 1
-        distance = self.get_distance(targetPos)
-        diff_x = abs(targetPos[0] - self.x) or 1
+        distance = self.get_distance(target_pos)
+        diff_x = abs(target_pos[0] - self.x) or 1
         return (1 / distance) / ((abs(direction[0])) / diff_x)
 
     def get_distance(self, pos):

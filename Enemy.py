@@ -42,6 +42,13 @@ class Enemy(Entity):
                 self.game.score += self.pkt
                 return
 
+        for enemy_bullet in self.game.entityManager.enemy_bullets:
+            if enemy_bullet.collide_widget(self) and enemy_bullet.owner != self:
+                self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
+                self.destroy()
+                enemy_bullet.destroy()
+                return
+
     def moving(self, dt):
         step_size = self._speed * dt
         new_x = self.entity_pos[0]
