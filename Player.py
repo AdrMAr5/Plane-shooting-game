@@ -14,6 +14,7 @@ class Player(Entity):
         self.entity_pos = (400, 0)
         self.entity_size = (50, 50)
         self.speed = 400
+        self.hp = 100
 
         self.timeToShoot = 0.1
         self.canShoot = True
@@ -93,9 +94,11 @@ class Player(Entity):
         for bullet in self.game.entityManager.enemy_bullets:
             if bullet.collide_widget(self):
                 self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
-                self.destroy()
+                self.hp -= bullet.damage
+                print(self.hp)
                 bullet.destroy()
-                print(True)
+                if self.hp <= 0:
+                    self.destroy()
                 return
 
     def stop_call_backs(self):
