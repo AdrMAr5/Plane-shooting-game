@@ -84,7 +84,7 @@ class Player(Entity):
 
     def collision(self, dt):
         for e in self.game.entityManager.enemies:
-            if e.collide_widget(self) and type(e) != Ship:
+            if e.collide_widget(self):
                 self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
                 self.destroy()
                 e.destroy()
@@ -100,5 +100,3 @@ class Player(Entity):
         self.stop_call_backs()
         self.game.entityManager.remove_entity(self)
         self.game.dispatch("on_game_over")
-
-

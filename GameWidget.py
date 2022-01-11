@@ -18,8 +18,10 @@ def scoreFormat(score):
 
 
 class GameWidget(Widget):
-    def __init__(self, **kwargs):
+    def __init__(self, sm, **kwargs):
         super().__init__(**kwargs)
+        self.sm = sm
+        self.game_over = False
 
         self.collisionCheckTime = 0.1
 
@@ -48,7 +50,7 @@ class GameWidget(Widget):
         # self.sound = SoundLoader.load("assets/music.wav")
         # self.sound.play()
 
-        Clock.schedule_interval(self.spawn_enemies, 1)
+        Clock.schedule_interval(self.spawn_enemies, 0.5)
         Clock.schedule_interval(self.spawn_ships, 3)
         # self.spawn_enemies(1)
 
@@ -70,7 +72,11 @@ class GameWidget(Widget):
         pass
 
     def on_game_over(self):
-        pass
+        self.game_over = True
+        self.sm.current = 'menu'
+
+    def on_dupa_event(self):
+        print('dupa event')
 
     @property
     def score(self):

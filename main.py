@@ -1,51 +1,54 @@
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+from kivy.uix.button import Button
 
 from GameWidget import GameWidget
 
 
-class MainWindow(Screen):
+class MenuWindow(Screen):
+    def __init__(self, **kwargs):
+        super(MenuWindow, self).__init__(**kwargs)
+        self.start_button = Button(text='play')
+        self.add_widget(self.start_button)
+        self.start_button.bind(on_release=self.start_game)
 
-    def play_game(self):
-        sm.current = "Game"
+    def start_game(self, *args):
+        self.manager.current = 'game'
 
 
 class GameWindow(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.game = GameWidget()
-        self.game.bind(on_game_over=self.on_game_over)
-        self.add_widget(self.game)
+        self.game = None
 
     def on_pre_enter(self, *args):
-        self.game = GameWidget()
+        self.game = GameWidget(self.manager)
         self.add_widget(self.game)
 
     def on_enter(self, *args):
         print("Wchodzę do giery")
-        # self.game = GameWidget()
-        # self.add_widget(self.game)
 
     def on_leave(self, *args):
         print("Wychodzę z giery")
-        self.remove_widget(self.game)
+        self.clear_widgets()
 
-    def on_game_over(self, dt):
-        print("Koniec Gry")
-        sm.current = "Menu"
+    def change(self, *args):
+        self.manager.current = 'menu'
 
 
-kv = Builder.load_file("menu.kv")
-sm = ScreenManager()
+
 
 
 class MyMainApp(App):
 
     def build(self):
-        sm.add_widget(GameWindow(name="Game"))
-        sm.add_widget(MainWindow(name="Menu"))
+        sm = ScreenManager(transition=FadeTransition())
+        sc1 = MenuWindow(name='menu')
+        sc2 = GameWindow(name='game')
+        sm.add_widget(sc1)
+        sm.add_widget(sc2)
         return sm
 
 

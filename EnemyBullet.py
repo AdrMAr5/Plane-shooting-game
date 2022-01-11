@@ -3,7 +3,7 @@ from Enemy import Enemy
 
 
 class EnemyBullet(Enemy):
-    def __init__(self, game, pos, speed=300, size=(16, 16), **kwargs):
+    def __init__(self, game, pos, speed=1000, size=(16, 16), **kwargs):
         super(EnemyBullet, self).__init__(game, pos, speed, **kwargs)
         self.entity_size = size
         self.entity_pos = pos
