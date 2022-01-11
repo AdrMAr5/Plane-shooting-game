@@ -11,6 +11,8 @@ class Zero(Enemy):
         self.game = game
         self._speed = speed
         self.entity_pos = pos
+        self.bullet_parameters = {'damage': 25, 'speed': 300, 'size': (15, 15),
+                                  'source': "assets/enemy bullet.png", 'owner': self}
         self.source = "assets/enemy.png"
         self._collisionEvent = Clock.schedule_interval(self.collision, game.collisionCheckTime)
 
@@ -35,7 +37,7 @@ class Zero(Enemy):
             if self.entity_pos == self.playerPos:
                 self.commandStep += 1
         elif self.commandStep == 1:  # Stzał do gracza
-            #self.game.entityManager.add_entity(EnemyBullet(self.game, self.entity_pos, self))
+            self.game.entityManager.add_entity(EnemyBullet(self.game, self.entity_pos, self.bullet_parameters))
             self.commandStep += 1
             self.angularSpeedIncrement = self.get_angular_increment(self.escapePos)
         elif self.commandStep == 2:  # Odlatywanie od gracza
