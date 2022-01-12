@@ -16,7 +16,7 @@ class Player(Entity):
         self.speed = 400
         self.hp = 100
 
-        self.timeToShoot = 0.1
+        self.timeToShoot = 0.5
         self.canShoot = True
 
         self._shoot_event = Clock.schedule_interval(self.shootDelay, self.timeToShoot)

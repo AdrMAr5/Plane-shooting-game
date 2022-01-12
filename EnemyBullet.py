@@ -10,12 +10,12 @@ class EnemyBullet(Enemy):
         self.owner = parameters['owner']
         self.damage = parameters['damage']
         self.source = parameters['source']
+        self.param = parameters
 
         self.entity_pos = pos
         self.playerPos = self.game.player.entity_pos
         self.direction = self.get_direction(self.playerPos)
         self.angularSpeedIncrement = self.get_angular_increment(self.playerPos)
-
 
     def on_frame(self, sender, dt):
         self.moving(dt)

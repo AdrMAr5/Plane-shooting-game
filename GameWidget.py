@@ -45,13 +45,13 @@ class GameWidget(StencilView):
 
         Clock.schedule_interval(lambda dt: print(f"[\033[92mINFO\033[0m   ] [FPS         ] {str(Clock.get_fps())}"), 1)
 
-        Clock.schedule_interval(self._on_frame, 0)
+        self.on_frame_event = Clock.schedule_interval(self._on_frame, 0)
 
         # self.sound = SoundLoader.load("assets/music.wav")
         # self.sound.play()
 
-        Clock.schedule_interval(self.spawn_enemies, 0.5)
-        Clock.schedule_interval(self.spawn_ships, 3)
+        self.on_spawn_enemies = Clock.schedule_interval(self.spawn_enemies, 0.5)
+        self.on_spawn_ships = Clock.schedule_interval(self.spawn_ships, 3)
         # self.spawn_enemies(1)
 
     def spawn_enemies(self, dt):
@@ -69,6 +69,7 @@ class GameWidget(StencilView):
         self.dispatch("on_frame", dt)
 
     def on_frame(self, dt):
+        print('ja dalej zyje')
         pass
 
     def on_game_over(self):
@@ -90,6 +91,8 @@ class GameWidget(StencilView):
     def destroy(self):
         #self.unregister_event_types('on_frame')
         print('game widget: usuwam się elo')
+        self.on_frame_event.cancel()
+        # self.unregister.event.types(self.on_frame_event)
 
         #self.entityManager = None
         #self.player = None

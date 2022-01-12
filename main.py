@@ -1,11 +1,6 @@
 from kivy.app import App
-from kivy.clock import Clock
-from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.uix.button import Button
-from kivy.core.window import Window
-from kivy.uix.widget import Widget
-
 from GameWidget import GameWidget
 
 
@@ -48,31 +43,11 @@ class GameWindow(Screen):
         # self.clear_widgets()
         print('dzieci screena:')
         print(self.children)
-        # self.clear_widgets([self.game])
         self.game.destroy()
-        # self.parent.remove_widget(self.game)
-        # self.remove_widget(self.game)
         self.game = None
         print('dzieci screena:')
         print(self.children)
         self.manager.current = 'menu'
-
-
-
-# class Game(Widget):
-#     def __init__(self, screen):
-#         super(Game, self).__init__()
-#         self.game = None
-#
-#     def create_game(self):
-#         game = GameWidget(self)
-#         self.add_widget(game)
-#         print(self.children)
-#
-#     def change(self):
-#         self.clear_widgets()
-#         print(self.children)
-#         self.parent.manager.current = 'menu'
 
 
 class MyMainApp(App):

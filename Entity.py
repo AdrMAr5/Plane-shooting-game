@@ -2,6 +2,7 @@ import math
 from kivy.core.window import Window
 from kivy.graphics import Rectangle
 from kivy.uix.widget import Widget
+from Enums import EntityType
 
 
 class Entity(Widget):
