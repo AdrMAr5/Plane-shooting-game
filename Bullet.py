@@ -2,11 +2,13 @@ from kivy.core.audio import SoundLoader
 from kivy.core.window import Window
 
 from Entity import Entity
+from Enums import EntityType
 
 
 class Bullet(Entity):
     def __init__(self, game, pos, speed=200, **kwargs):
         super().__init__(**kwargs)
+        self.type = EntityType.Bullet
         #sound = SoundLoader.load("assets/bullet.wav")
         #sound.play()
         self.game = game

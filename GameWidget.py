@@ -10,6 +10,7 @@ from EnitityManager import EntityManager
 from Player import Player
 from Zero import Zero
 from ship import Ship
+from Enums import EntityType
 
 
 def scoreFormat(score):
@@ -43,6 +44,7 @@ class GameWidget(StencilView):
         self.entityManager = EntityManager(self)
         self.entityManager.add_entity(self.player)
 
+
         Clock.schedule_interval(lambda dt: print(f"[\033[92mINFO\033[0m   ] [FPS         ] {str(Clock.get_fps())}"), 1)
 
         self.on_frame_event = Clock.schedule_interval(self._on_frame, 0)
@@ -69,7 +71,6 @@ class GameWidget(StencilView):
         self.dispatch("on_frame", dt)
 
     def on_frame(self, dt):
-        print('ja dalej zyje')
         pass
 
     def on_game_over(self):

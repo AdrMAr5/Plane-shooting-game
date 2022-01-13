@@ -5,9 +5,13 @@ from EnemyBullet import EnemyBullet
 
 
 # Podstawowy myśliwiec Japońskiej Marynarki Wojennej - Mitsubishi A6M Reisen znany jako Zero
+from Enums import EntityType
+
+
 class Zero(Enemy):
     def __init__(self, game, pos, speed=300, **kwargs):
         super().__init__(game, pos, speed, **kwargs)
+        self.type = EntityType.Zero
         self.game = game
         self._speed = speed
         self.entity_pos = pos

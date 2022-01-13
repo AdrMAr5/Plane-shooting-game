@@ -2,6 +2,7 @@ from kivy.clock import Clock
 
 
 from Entity import Entity
+from Enums import EntityType
 from Explosion import Explosion
 
 
@@ -16,6 +17,8 @@ class Enemy(Entity):
         self.pkt = 100
         self._angularSpeedIncrement = 1
         game.bind(on_frame=self.on_frame)
+
+        self._collision_objects = [EntityType.Bullet, EntityType.EnemyBullet]
 
     @property
     def angularSpeedIncrement(self):
@@ -34,20 +37,15 @@ class Enemy(Entity):
             return
 
     def collision(self, dt):
-        for e in self.game.entityManager.bullets:
-            if e.collide_widget(self):
-                self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
-                self.destroy()
-                e.destroy()
-                self.game.score += self.pkt
-                return
-
-        for enemy_bullet in self.game.entityManager.enemy_bullets:
-            if enemy_bullet.collide_widget(self) and enemy_bullet.owner != self:
-                self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
-                self.destroy()
-                enemy_bullet.destroy()
-                return
+        for collision_object in self._collision_objects:
+            for e in self.game.entityManager.entities[collision_object]:
+                if e.collide_widget(self):
+                    if e.type == EntityType.Bullet:
+                        self.game.score += self.pkt
+                    self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
+                    self.destroy()
+                    e.destroy()
+                    return
 
     def moving(self, dt):
         step_size = self._speed * dt

@@ -2,8 +2,15 @@ from enum import Enum
 
 
 class EntityType(Enum):
-    Bullet = 1
-    Ship = 2
-    Zero = 3
-    Player = 4
-    EnemyBullet = 5
+    Entity = 0
+    Player = 1
+    Bullet = 2
+    EnemyBullet = 3
+    Zero = 4
+    Ship = 5
+
+
+class Layer(Enum):
+    Sky = 0
+    Ground = 1
+    BackGround = 2

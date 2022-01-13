@@ -2,12 +2,14 @@ from kivy.clock import Clock
 
 from Enemy import Enemy
 from EnemyBullet import EnemyBullet
-
+from Enums import *
 
 
 class Ship(Enemy):
     def __init__(self, game, pos, **kwargs):
         super().__init__(game, pos, **kwargs)
+        self.type = EntityType.Ship
+        self.layer = Layer.Ground
         self.game = game
         self.parameters = {'speed': 1, 'bullets': 1, 'points': 100}
         self.bullet_parameters = {'damage': 50, 'speed': 150, 'size': (18, 18),

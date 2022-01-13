@@ -3,12 +3,14 @@ from kivy.core.window import Window
 
 from Bullet import Bullet
 from Entity import Entity
+from Enums import EntityType
 from Explosion import Explosion
-from ship import Ship
+
 
 class Player(Entity):
     def __init__(self, game, **kwargs):
         super().__init__(**kwargs)
+        self.type = EntityType.Player
         self.game = game
         self.source = "assets/plane.png"
         self.entity_pos = (400, 0)
@@ -16,11 +18,12 @@ class Player(Entity):
         self.speed = 400
         self.hp = 100
 
-        self.timeToShoot = 0.5
+        self.timeToShoot = 0.1
         self.canShoot = True
 
         self._shoot_event = Clock.schedule_interval(self.shootDelay, self.timeToShoot)
         self._collisionEvent = Clock.schedule_interval(self.collision, game.collisionCheckTime)
+        self._collision_objects = [EntityType.Zero, EntityType.EnemyBullet]
 
         game.bind(on_frame=self.on_frame)
 
@@ -84,22 +87,18 @@ class Player(Entity):
             self.entity_pos = (newX, newY)
 
     def collision(self, dt):
-        for enemy in self.game.entityManager.enemies:
-            if enemy.collide_widget(self):
-                self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
-                self.destroy()
-                enemy.destroy()
-                return
-
-        for bullet in self.game.entityManager.enemy_bullets:
-            if bullet.collide_widget(self):
-                self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
-                self.hp -= bullet.damage
-                print(self.hp)
-                bullet.destroy()
-                if self.hp <= 0:
-                    self.destroy()
-                return
+        for collision_object in self._collision_objects:
+            for enemy in self.game.entityManager.entities[collision_object]:
+                if enemy.collide_widget(self):
+                    self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
+                    if enemy.type == EntityType.Bullet:
+                        self.hp -= enemy.damage
+                        if self.hp <= 0:
+                            self.destroy()
+                    else:
+                        self.destroy()
+                    enemy.destroy()
+                    return
 
     def stop_call_backs(self):
         self.clear_widgets()

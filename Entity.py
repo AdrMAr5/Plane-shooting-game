@@ -2,12 +2,14 @@ import math
 from kivy.core.window import Window
 from kivy.graphics import Rectangle
 from kivy.uix.widget import Widget
-from Enums import EntityType
+from Enums import *
 
 
 class Entity(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.type = EntityType.Entity
+        self.layer = Layer.Sky
         self._entity_pos = (0, 0)
         self._entity_size = (50, 50)
         self._source = "bullshit.png"

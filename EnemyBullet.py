@@ -1,10 +1,12 @@
 
 from Enemy import Enemy
+from Enums import EntityType
 
 
 class EnemyBullet(Enemy):
     def __init__(self, game, pos, parameters, speed=300, size=(16, 16), damage=10, **kwargs):
         super(EnemyBullet, self).__init__(game, pos, parameters['speed'], **kwargs)
+        self.type = EntityType.EnemyBullet
         self.entity_size = parameters['size']
         self.speed = parameters['speed']
         self.owner = parameters['owner']
