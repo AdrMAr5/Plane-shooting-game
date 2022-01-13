@@ -91,7 +91,7 @@ class Player(Entity):
             for enemy in self.game.entityManager.entities[collision_object]:
                 if enemy.collide_widget(self):
                     self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
-                    if enemy.type == EntityType.Bullet:
+                    if enemy.type == EntityType.EnemyBullet:
                         self.hp -= enemy.damage
                         if self.hp <= 0:
                             self.destroy()
