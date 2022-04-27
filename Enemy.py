@@ -1,6 +1,5 @@
 from kivy.clock import Clock
 
-
 from Entity import Entity
 from Enums import EntityType
 from Explosion import Explosion
@@ -40,8 +39,11 @@ class Enemy(Entity):
         for collision_object in self._collision_objects:
             for e in self.game.entityManager.entities[collision_object]:
                 if e.collide_widget(self):
+                    if isinstance(e, Enemy) and e.owner == self:
+                        continue
                     if e.type == EntityType.Bullet:
                         self.game.score += self.pkt
+
                     self.game.entityManager.add_entity(Explosion(self.game, self.entity_pos))
                     self.destroy()
                     e.destroy()

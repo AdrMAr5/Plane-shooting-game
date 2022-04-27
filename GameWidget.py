@@ -74,7 +74,7 @@ class GameWidget(StencilView):
         pass
 
     def on_game_over(self):
-        print('Player: umieram elo')
+
         self.parent.change()
 
     @property
@@ -91,7 +91,7 @@ class GameWidget(StencilView):
 
     def destroy(self):
         #self.unregister_event_types('on_frame')
-        print('game widget: usuwam się elo')
+
         self.on_frame_event.cancel()
         # self.unregister.event.types(self.on_frame_event)
 

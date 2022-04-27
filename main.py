@@ -32,20 +32,19 @@ class GameWindow(Screen):
         pass
 
     def on_enter(self, *args):
-        print("Wchodzę do giery")
+
         self.game = GameWidget()
         self.add_widget(self.game)
 
     def on_leave(self, *args):
-        print("Wychodzę z giery")
+        pass
 
     def change(self, *args):
         # self.clear_widgets()
-        print('dzieci screena:')
+
         print(self.children)
         self.game.destroy()
         self.game = None
-        print('dzieci screena:')
         print(self.children)
         self.manager.current = 'menu'
 
